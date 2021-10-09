@@ -1,0 +1,75 @@
+version: "3.7"
+
+services:
+  ecommerce_backend-api:
+    build:
+      context: .
+    environment:
+      CREATE_DATABASE: ${CREATE_DATABASE-true}
+      DJANGO_SETTINGS_MODULE: config.settings.docker
+    image: ecommerce_backend/api
+    container_name: ecommerce_backend-api
+    command: sh -c './wait-for-pg.sh -t 30 db:5432 -- ./docker_start.sh'
+    ports:
+      - '4000:4000'
+    depends_on:
+      - docker_db
+    networks:
+      - postgres_network
+
+  docker_db:
+    image: postgres:11.3-alpine
+    container_name: ecommerce_backend-docker_db
+    restart: always
+    environment:
+      - POSTGRES_DB=ecommerce_backend_db
+      - POSTGRES_USER=ecommerce_backend_user
+      - POSTGRES_PASSWORD=IWKdrWWnc6XA39pgX6PU
+    volumes:
+        - postgres_ecommerce_backend_docker:/var/lib/postgresql/data
+    networks:
+      postgres_network:
+         aliases:
+            - db
+  
+  development_db:
+    container_name: ecommerce_backend-development_db
+    image: postgres:11.3-alpine
+    environment:
+      - POSTGRES_DB=ecommerce_backend_db
+      - POSTGRES_USER=ecommerce_backend_user
+      - POSTGRES_PASSWORD=IWKdrWWnc6XA39pgX6PU
+    volumes:
+        - postgres_ecommerce_backend_dev:/var/lib/postgresql/data
+    ports:
+      - "5453:5432" 
+
+  test_db:
+    container_name: ecommerce_backend-test_db
+    image: postgres:11.3-alpine
+    environment:
+      - POSTGRES_DB=ecommerce_backend_db
+      - POSTGRES_USER=ecommerce_backend_user
+      - POSTGRES_PASSWORD=IWKdrWWnc6XA39pgX6PU
+    volumes:
+        - postgres_ecommerce_backend_test:/var/lib/postgresql/data
+    ports:
+      - "5454:5432"
+
+volumes:
+  postgres_ecommerce_backend_docker:
+    driver: local
+    name: postgres_ecommerce_backend_docker
+
+  postgres_ecommerce_backend_test:
+    driver: local
+    name: postgres_ecommerce_backend_test
+
+  postgres_ecommerce_backend_dev:
+    driver: local
+    name: postgres_ecommerce_backend_dev
+
+networks:
+  postgres_network:
+    driver: bridge
+
