@@ -1,0 +1,29 @@
+image:
+    name: python:3.8
+
+before_script:
+    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py > get-poetry.py
+    - python get-poetry.py --version 1.0.9
+    - source $HOME/.poetry/env
+    - poetry install --no-root
+    - source `poetry env info --path`/bin/activate
+
+run_tests:
+    variables:
+        POSTGRES_HOST: db 
+        POSTGRES_DB: ecommerce_backend_db
+        POSTGRES_USER: ecommerce_backend_user
+        POSTGRES_PASSWORD: IWKdrWWnc6XA39pgX6PU
+        POSTGRES_HOST_AUTH_METHOD: trust
+    only:
+        - merge_requests
+
+    services:
+        - name: postgres:11
+          alias: db
+    script:
+        - export DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
+        - make test
+
+    
+
