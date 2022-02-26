@@ -39,13 +39,10 @@ dev_db-initialize:
 test_db-up:
 	docker-compose up test_db
 
-test_db-stop:
-	docker-compose stop test_db
-
 lint: clean
-	flake8 ecommerce_backend
-	pylint ecommerce_backend
-	isort ecommerce_backend --check
+	poetry run flake8 ecommerce_backend
+	#poetry run pylint ecommerce_backend
+	#poetry run isort ecommerce_backend --check
 
 test: lint
-	pytest
+	poetry run pytest

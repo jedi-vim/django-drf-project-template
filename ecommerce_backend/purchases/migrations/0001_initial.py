@@ -13,76 +13,154 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('auth', '0011_update_proxy_permissions'),
+        ("auth", "0011_update_proxy_permissions"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Person',
-            fields=[
-                ('user_ptr', models.OneToOneField(
-                    auto_created=True,
-                    on_delete=django.db.models.deletion.CASCADE, 
-                    parent_link=True, 
-                    primary_key=True, 
-                    serialize=False, 
-                    to=settings.AUTH_USER_MODEL
-                )),
-            ],
-            options={
-                'verbose_name': 'user',
-                'verbose_name_plural': 'users',
-                'abstract': False,
-            },
-            bases=('auth.user',),
-            managers=[
-                ('objects', django.contrib.auth.models.UserManager()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Purchase',
+            name="Person",
             fields=[
                 (
-                    'id', 
-                    models.AutoField(
-                        auto_created=True, 
-                        primary_key=True, 
-                        serialize=False, 
-                        verbose_name='ID'
-                    )
+                    "user_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
                 ),
-                ('status', models.CharField(choices=[('opened', 'opened'), ('closed', 'closed')], default='opened', max_length=15)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('closed_at', models.DateTimeField(null=True)),
-                ('total', models.DecimalField(decimal_places=2, default=Decimal('0'), max_digits=9)),
-                ('customer', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='customer_purchases', to='purchases.Person')),
-                ('salesperson', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='salesperson_purchases', to='purchases.Person')),
+            ],
+            options={
+                "verbose_name": "user",
+                "verbose_name_plural": "users",
+                "abstract": False,
+            },
+            bases=("auth.user",),
+            managers=[
+                ("objects", django.contrib.auth.models.UserManager()),
             ],
         ),
         migrations.CreateModel(
-            name='Sellable',
+            name="Purchase",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.CharField(max_length=50)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=9)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("opened", "opened"), ("closed", "closed")],
+                        default="opened",
+                        max_length=15,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("closed_at", models.DateTimeField(null=True)),
+                (
+                    "total",
+                    models.DecimalField(decimal_places=2, default=Decimal("0"), max_digits=9),
+                ),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="customer_purchases",
+                        to="purchases.Person",
+                    ),
+                ),
+                (
+                    "salesperson",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="salesperson_purchases",
+                        to="purchases.Person",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Storable',
+            name="Sellable",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity_available', models.IntegerField(default=0)),
-                ('sellable', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='storable', to='purchases.Sellable')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("description", models.CharField(max_length=50)),
+                ("price", models.DecimalField(decimal_places=2, max_digits=9)),
             ],
         ),
         migrations.CreateModel(
-            name='PurchaseItem',
+            name="Storable",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField()),
-                ('total', models.DecimalField(decimal_places=2, max_digits=9, null=True)),
-                ('purchase', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='purchases.Purchase')),
-                ('sellable', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='purchases.Sellable')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("quantity_available", models.IntegerField(default=0)),
+                (
+                    "sellable",
+                    models.OneToOneField(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="storable",
+                        to="purchases.Sellable",
+                    ),
+                ),
+            ],
+        ),
+        migrations.CreateModel(
+            name="PurchaseItem",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("quantity", models.IntegerField()),
+                (
+                    "total",
+                    models.DecimalField(decimal_places=2, max_digits=9, null=True),
+                ),
+                (
+                    "purchase",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="items",
+                        to="purchases.Purchase",
+                    ),
+                ),
+                (
+                    "sellable",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="purchases.Sellable",
+                    ),
+                ),
             ],
         ),
     ]

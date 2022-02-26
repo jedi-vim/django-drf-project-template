@@ -4,16 +4,21 @@ from datetime import datetime
 import factory
 from factory.django import DjangoModelFactory
 
-from ecommerce_backend.purchases.models import (Person, Purchase, PurchaseItem,
-                                                Sellable, Storable)
+from ecommerce_backend.purchases.models import (
+    Person,
+    Purchase,
+    PurchaseItem,
+    Sellable,
+    Storable,
+)
 
 
 class PersonFactory(DjangoModelFactory):
     class Meta:
         model = Person
-    
-    username = factory.Faker('name')
-    first_name = factory.Faker('name')
+
+    username = factory.Faker("name")
+    first_name = factory.Faker("name")
 
 
 class StorableFactory(DjangoModelFactory):
@@ -30,12 +35,13 @@ class SellableFactory(DjangoModelFactory):
 
     class Params:
         is_storable = factory.Trait(
-            storable=factory.RelatedFactory(StorableFactory,
-                                            factory_related_name='sellable')
+            storable=factory.RelatedFactory(
+                StorableFactory, factory_related_name="sellable"
+            )
         )
 
-    description = factory.Sequence(lambda n: f'Sellable {n}')
-    price = decimal.Decimal('1.99')
+    description = factory.Sequence(lambda n: f"Sellable {n}")
+    price = decimal.Decimal("1.99")
     storable = None
 
 
@@ -46,7 +52,7 @@ class PurchaseFactory(DjangoModelFactory):
     class Params:
         closed = factory.Trait(
             closed_at=factory.LazyFunction(lambda: datetime.now()),
-            status=Purchase.CLOSED
+            status=Purchase.CLOSED,
         )
 
     customer = factory.SubFactory(PersonFactory)

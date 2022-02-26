@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).parents[2]
 
 SECRET_KEY = '@8*e_7dwlyn3!v3a*+fhi8a%96nl!_x%)ub=25dvfggu%1oyx^'
@@ -36,10 +38,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'default': dj_database_url.config(env='DATABASE_URL'),
 }
 
 

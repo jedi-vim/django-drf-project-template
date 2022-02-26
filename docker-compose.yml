@@ -48,22 +48,17 @@ services:
     container_name: ecommerce_backend-test_db
     image: postgres:11.3-alpine
     environment:
-      - POSTGRES_DB=ecommerce_backend_db
-      - POSTGRES_USER=ecommerce_backend_user
-      - POSTGRES_PASSWORD=IWKdrWWnc6XA39pgX6PU
-    volumes:
-        - postgres_ecommerce_backend_test:/var/lib/postgresql/data
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_HOST_AUTH_METHOD: ${POSTGRES_HOST_AUTH_METHOD}
     ports:
-      - "5454:5432"
+      - '5432:5432'
 
 volumes:
   postgres_ecommerce_backend_docker:
     driver: local
     name: postgres_ecommerce_backend_docker
-
-  postgres_ecommerce_backend_test:
-    driver: local
-    name: postgres_ecommerce_backend_test
 
   postgres_ecommerce_backend_dev:
     driver: local
