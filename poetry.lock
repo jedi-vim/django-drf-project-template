@@ -230,6 +230,23 @@ python-dateutil = ">=1.0,<2.0 || >2.0"
 six = "*"
 
 [[package]]
+category = "main"
+description = "WSGI HTTP Server for UNIX"
+name = "gunicorn"
+optional = false
+python-versions = ">=3.5"
+version = "21.2.0"
+
+[package.dependencies]
+packaging = "*"
+
+[package.extras]
+eventlet = ["eventlet (>=0.24.1)"]
+gevent = ["gevent (>=1.4.0)"]
+setproctitle = ["setproctitle"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 category = "dev"
 description = "iniconfig: brain-dead simple config-ini parsing"
 name = "iniconfig"
@@ -356,7 +373,7 @@ python-versions = "*"
 version = "0.4.3"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
@@ -513,7 +530,7 @@ mccabe = ">=0.6,<0.7"
 toml = ">=0.7.1"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python parsing module"
 name = "pyparsing"
 optional = false
@@ -629,7 +646,7 @@ python-versions = "*"
 version = "2020.11.13"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
@@ -717,7 +734,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "1072eef30697ba6bea32b362944b3526eb78536c06e4bd23fcd4716aba0f2875"
+content-hash = "4df84db5e4e1963031bfe6a4bddd6c485087232fe9dc29bf3f4aa8a96e4754ac"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -831,6 +848,7 @@ freezegun = [
     {file = "freezegun-0.3.15-py2.py3-none-any.whl", hash = "sha256:82c757a05b7c7ca3e176bfebd7d6779fd9139c7cb4ef969c38a28d74deef89b2"},
     {file = "freezegun-0.3.15.tar.gz", hash = "sha256:e2062f2c7f95cc276a834c22f1a17179467176b624cc6f936e8bc3be5535ad1b"},
 ]
+gunicorn = []
 iniconfig = [
     {file = "iniconfig-1.0.1-py3-none-any.whl", hash = "sha256:80cf40c597eb564e86346103f609d74efce0f6b4d4f30ec8ce9e2c26411ba437"},
     {file = "iniconfig-1.0.1.tar.gz", hash = "sha256:e5f92f89355a67de0595932a6c6c02ab4afddc6fcdc0bfc5becd0d60884d3f69"},
