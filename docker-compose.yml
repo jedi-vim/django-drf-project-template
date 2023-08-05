@@ -8,6 +8,9 @@ services:
       DJANGO_SETTINGS_MODULE: config.settings.docker
     image: amcom/api
     container_name: amcom-api
+    command: gunicorn -b 0.0.0.0:4000 config.wsgi
+    volumes:
+      - .:/app
     ports:
       - '4000:4000'
     depends_on:
