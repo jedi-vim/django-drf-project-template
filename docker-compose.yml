@@ -5,11 +5,9 @@ services:
     build:
       context: .
     environment:
-      CREATE_DATABASE: ${CREATE_DATABASE-true}
       DJANGO_SETTINGS_MODULE: config.settings.docker
     image: ecommerce_backend/api
     container_name: ecommerce_backend-api
-    command: sh -c './wait-for-pg.sh -t 30 db:5432 -- ./docker_start.sh'
     ports:
       - '4000:4000'
     depends_on:
