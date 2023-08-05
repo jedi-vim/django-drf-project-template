@@ -6,8 +6,8 @@ services:
       context: .
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.docker
-    image: ecommerce_backend/api
-    container_name: ecommerce_backend-api
+    image: amcom/api
+    container_name: amcom-api
     ports:
       - '4000:4000'
     depends_on:
