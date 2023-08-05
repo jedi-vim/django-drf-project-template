@@ -2,26 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     namespace: {{ .Release.Namespace }}
-    name: {{ .Release.Name }}-api 
+    name: {{ .Release.Name }}-webserver
 spec:
     selector:
         matchLabels:
-            name: {{ .Release.Name }}-api
+            name: {{ .Release.Name }}-webserver
     {{- if not .Values.deployment.autoscaling.enabled }}
     replicas: {{ .Values.NumReplicas }}
     {{- end }}
     template:
         metadata:
             labels:
-                name: {{ .Release.Name }}-api
+                name: {{ .Release.Name }}-webserver
         spec:
             containers:
-            - name: {{ .Release.Name }}-api
-              image: jedivim/{{ .Release.Name }}:1.2
-              command: 
-                - /bin/sh 
-                - -c 
-                - ./docker_start.sh
+            - name: {{ .Release.Name }}-webserver
+              image: {{ .Values.deployment.image }}
+              command:
+                - "gunicorn"
+                - "-b"
+                - "0.0.0.0:4000"
+                - "config.wsgi"
               envFrom:
                   - configMapRef:
                       name: {{ .Release.Name }}-configmap

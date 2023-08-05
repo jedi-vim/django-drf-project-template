@@ -1,4 +1,5 @@
 deployment:
+  image: "jedivim/amcom:0.1"
   numReplicas: 3
   autoscaling:
     enabled: false

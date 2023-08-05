@@ -4,7 +4,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   name: {{ .Release.Name }}-configmap
 data:
-  CREATE_DATABASE: "True"
+  DJANGO_SETTINGS_MODULE: config.settings.docker
   POSTGRES_DB: "ecommerce_commerce_db"
   POSTGRES_USER: "ecommerce_commerce_user"
   POSTGRES_PASSWORD: "IWKdrWWnc6XA39pgX6PU"
