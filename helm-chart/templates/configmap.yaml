@@ -5,6 +5,7 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   DJANGO_SETTINGS_MODULE: config.settings.docker
+  DATABASE_URL: "postgresql://ecommerce_commerce_user:IWKdrWWnc6XA39pgX6PU@postgres-service.amcom.svc.cluster.local:5432/ecommerce_commerce_db"
   POSTGRES_DB: "ecommerce_commerce_db"
   POSTGRES_USER: "ecommerce_commerce_user"
   POSTGRES_PASSWORD: "IWKdrWWnc6XA39pgX6PU"
