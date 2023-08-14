@@ -30,3 +30,14 @@ autopep8 = "^1.5.5"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.pytest]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+addopts = "--cov=ecommerce_backend --cov-fail-under=80 -vvv"
+
+[tool.coverage:run]
+omit = "*tests*, *migrations*"
+
+[tool.flake8]
+max-complexity = 7
+max-line-length = 120
